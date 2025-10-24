@@ -1,6 +1,6 @@
 from TFWR import *
 
-xType = [Entities.Pumpkin, Entities.Pumpkin, Entities.Pumpkin, Entities.Grass, Entities.Carrot, Entities.Bush]
+xType = [Entities.Pumpkin, Entities.Pumpkin, Entities.Pumpkin, Entities.Pumpkin, Entities.Carrot, Entities.Tree, Entities.Grass, Entities.Tree]
 
 def fit(types):
     if (types == Entities.Carrot or types == Entities.Pumpkin) and get_ground_type() != Grounds.Soil:
@@ -43,6 +43,7 @@ def checkPumpkin():
                 moves(x + i, y + j)
                 if get_entity_type() != Entities.Pumpkin:
                     harvest()
+                    fit(Entities.Pumpkin)
                     plant(Entities.Pumpkin)
                     full = False
                 elif not can_harvest():
