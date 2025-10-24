@@ -101,6 +101,9 @@ class Entity:
 
 
 class Entities:
+    Dead_Pumpkin: Entity
+
+
     Apple: Entity
     """Dinosaurs love them apparently."""
 
