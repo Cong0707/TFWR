@@ -57,7 +57,7 @@ def calculateType():
 def fit(types):
     if (types == Entities.Carrot or types == Entities.Pumpkin or types == Entities.Cactus) and get_ground_type() != Grounds.Soil:
         till()
-    elif (types != Entities.Carrot and types != Entities.Pumpkin or types != Entities.Cactus) and get_ground_type() == Grounds.Soil:
+    elif (types != Entities.Carrot and types != Entities.Pumpkin and types != Entities.Cactus) and get_ground_type() == Grounds.Soil:
         till()
 
 def moves(x, y):
