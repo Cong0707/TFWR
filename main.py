@@ -1,6 +1,47 @@
 from TFWR import *
 
-xType = [Entities.Pumpkin, Entities.Pumpkin, Entities.Pumpkin, Entities.Pumpkin, Entities.Pumpkin, Entities.Pumpkin, Entities.Tree, Entities.Tree, Entities.Tree, Entities.Tree, Entities.Tree, Entities.Tree]
+entityToItem = {Entities.Pumpkin:Items.Pumpkin, Entities.Tree:Items.Wood, Entities.Bush:Items.Wood,
+                Entities.Grass:Items.Hay, Entities.Carrot:Items.Carrot}
+
+xType = [Entities.Pumpkin, Entities.Carrot, Entities.Carrot,Entities.Tree,
+         Entities.Tree, Entities.Tree, Entities.Tree,Entities.Tree,
+         Entities.Tree, Entities.Tree, Entities.Tree,Entities.Tree]
+
+def calculateType():
+    allTypes = [Entities.Carrot, Entities.Tree, Entities.Grass, Entities.Pumpkin]
+    def num(entity):
+        return num_items(entityToItem[entity])
+    def sort(allTypes):
+        a = list(allTypes)  # 复制，避免修改原列表
+        n = len(a)
+        for i in range(n):
+            min_idx = i
+            for j in range(i + 1, n):
+                if num(a[j]) < num(a[min_idx]):
+                    min_idx = j
+            if min_idx != i:
+                a[i], a[min_idx] = a[min_idx], a[i]
+        return a
+    sorted_allTypes = sort(allTypes)
+    world_size = get_world_size()
+
+    topOne = sorted_allTypes[0]
+    topTwo = sorted_allTypes[1]
+    topThree = sorted_allTypes[2]
+
+    end1 = world_size / 2
+    end2 = end1 + world_size / 4
+    end3 = end2 + world_size / 8
+
+    for i in range(end1):
+        xType[i] = topOne
+
+    for i in range(end1, end2):
+        xType[i] = topTwo
+
+    for i in range(end2, end3):
+        xType[i] = topThree
+
 
 def fit(types):
     if (types == Entities.Carrot or types == Entities.Pumpkin) and get_ground_type() != Grounds.Soil:
@@ -75,6 +116,7 @@ def checkTree():
 
 while True:
     moves(0, 0)
+    calculateType()
 
     for i in range(get_world_size()):
         move(East)
