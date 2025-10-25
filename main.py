@@ -3,8 +3,8 @@ from TFWR import *
 entityToItem = {Entities.Pumpkin:Items.Pumpkin, Entities.Tree:Items.Wood, Entities.Bush:Items.Wood,
                 Entities.Grass:Items.Hay, Entities.Carrot:Items.Carrot}
 
-xType = [Entities.Pumpkin, Entities.Carrot, Entities.Carrot,Entities.Tree,
-         Entities.Tree, Entities.Tree, Entities.Tree,Entities.Tree,
+xType = [Entities.Pumpkin, Entities.Pumpkin, Entities.Pumpkin,Entities.Pumpkin,
+         Entities.Pumpkin, Entities.Pumpkin, Entities.Carrot,Entities.Carrot,
          Entities.Tree, Entities.Tree, Entities.Tree,Entities.Tree]
 
 def calculateType():
@@ -120,6 +120,8 @@ def checkPumpkin():
                 full = False
             elif not can_harvest():
                 full = False
+            else:
+                xt.remove(i)
     moves(x, y)
     harvest()
 
@@ -147,7 +149,7 @@ def checkTree():
 
 while True:
     moves(0, 0)
-    calculateType()
+    #calculateType()
 
     for i in range(get_world_size()):
         for j in range(get_world_size()):
