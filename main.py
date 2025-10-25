@@ -30,8 +30,7 @@ def calculateType():
     topThree = sorted_allTypes[2]
 
     end1 = world_size / 2
-    end2 = end1 + world_size / 4
-    end3 = end2 + world_size / 8
+    end2 = end1 + end1 / 2
 
     for i in range(end1):
         xType[i] = topOne
@@ -39,7 +38,7 @@ def calculateType():
     for i in range(end1, end2):
         xType[i] = topTwo
 
-    for i in range(end2, end3):
+    for i in range(end2, world_size):
         xType[i] = topThree
 
     quick_print(xType)
@@ -152,7 +151,7 @@ def checkTree():
 
 while True:
     moves(0, 0)
-    #calculateType()
+    calculateType()
 
     for i in range(get_world_size()):
         for j in range(get_world_size()):
