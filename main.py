@@ -42,6 +42,8 @@ def calculateType():
     for i in range(end2, end3):
         xType[i] = topThree
 
+    quick_print(xType)
+
 
 def fit(types):
     if (types == Entities.Carrot or types == Entities.Pumpkin) and get_ground_type() != Grounds.Soil:
@@ -75,20 +77,49 @@ def checkPumpkin():
     #确定下边界
     if (y % size) != 0:
         return
+    #预种一遍
+    for i in range(size):
+        for j in range(size):
+            if i % 2 == 0:
+                moves(x + i, y + j)
+            else:
+                moves(x + i, y + (size - 1 - j))
+
+            harvest()
+            fit(Entities.Pumpkin)
+            plant(Entities.Pumpkin)
+
+    #检查一遍
+    xt = []
+
+    for i in range(size):
+        for j in range(size):
+            tox = x + i
+            if i % 2 == 0:
+                toy = y + j
+            else:
+                toy = y + (size - 1 - j)
+
+            moves(tox, toy)
+
+            if get_entity_type() != Entities.Pumpkin or not can_harvest():
+                xt.append((tox, toy))
+
     #开始检查南瓜是否完整
     full = False
     while not full:
         full = True
-        for i in range(size):
-            for j in range(size):
-                moves(x + i, y + j)
-                if get_entity_type() != Entities.Pumpkin:
-                    harvest()
-                    fit(Entities.Pumpkin)
-                    plant(Entities.Pumpkin)
-                    full = False
-                elif not can_harvest():
-                    full = False
+        for i in xt:
+            badx = i[0]
+            bady = i[1]
+            moves(badx, bady)
+            if get_entity_type() != Entities.Pumpkin:
+                harvest()
+                fit(Entities.Pumpkin)
+                plant(Entities.Pumpkin)
+                full = False
+            elif not can_harvest():
+                full = False
     moves(x, y)
     harvest()
 
@@ -119,9 +150,7 @@ while True:
     calculateType()
 
     for i in range(get_world_size()):
-        move(East)
         for j in range(get_world_size()):
-            move(North)
             type = xType[get_pos_x()]
             fit(type)
             if type == Entities.Pumpkin:
@@ -133,3 +162,6 @@ while True:
                 plant(type)
             if get_water() <= 0.8:
                 use_item(Items.Water)
+
+            move(North)
+        move(East)
