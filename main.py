@@ -3,9 +3,10 @@ from TFWR import *
 entityToItem = {Entities.Pumpkin:Items.Pumpkin, Entities.Tree:Items.Wood, Entities.Bush:Items.Wood,
                 Entities.Grass:Items.Hay, Entities.Carrot:Items.Carrot, Entities.Cactus:Items.Cactus}
 
-xType = [Entities.Pumpkin, Entities.Pumpkin, Entities.Pumpkin,Entities.Pumpkin,
-         Entities.Pumpkin, Entities.Pumpkin, Entities.Carrot,Entities.Carrot,
-         Entities.Tree, Entities.Tree, Entities.Tree,Entities.Tree]
+xType = []
+
+for i in range(get_world_size()):
+    xType.append(Entities.Pumpkin)
 
 def delay(tick):
     now = get_tick_count()
@@ -40,7 +41,7 @@ def calculateType():
     topThree = sorted_allTypes[2]
 
     end1 = world_size / 2
-    end2 = end1 + end1 / 2 + 1
+    end2 = end1 + end1 / 2
 
     for i in range(end1):
         xType[i] = topOne
@@ -118,6 +119,7 @@ def checkPumpkin():
 
     #开始检查南瓜是否完整
     while True:
+        start = get_time()
         for i in xt:
             badx = i[0]
             bady = i[1]
@@ -133,7 +135,8 @@ def checkPumpkin():
                     xt.remove(i)
         if len(xt) == 0:
             break
-        delayTime(3.8)
+        end = get_time()
+        delayTime(3.8 - (end - start))
     moves(x, y)
     harvest()
 
