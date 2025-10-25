@@ -107,6 +107,7 @@ def checkPumpkin():
     #开始检查南瓜是否完整
     full = False
     while not full:
+        pet_the_piggy()
         full = True
         for i in xt:
             badx = i[0]
