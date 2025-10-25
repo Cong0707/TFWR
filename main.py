@@ -1,7 +1,7 @@
 from TFWR import *
 
 entityToItem = {Entities.Pumpkin:Items.Pumpkin, Entities.Tree:Items.Wood, Entities.Bush:Items.Wood,
-                Entities.Grass:Items.Hay, Entities.Carrot:Items.Carrot}
+                Entities.Grass:Items.Hay, Entities.Carrot:Items.Carrot, Entities.Cactus:Items.Cactus}
 
 xType = [Entities.Pumpkin, Entities.Pumpkin, Entities.Pumpkin,Entities.Pumpkin,
          Entities.Pumpkin, Entities.Pumpkin, Entities.Carrot,Entities.Carrot,
@@ -18,7 +18,7 @@ def delayTime(time):
         continue
 
 def calculateType():
-    allTypes = [Entities.Carrot, Entities.Tree, Entities.Grass, Entities.Pumpkin]
+    allTypes = [Entities.Carrot, Entities.Tree, Entities.Grass, Entities.Pumpkin, Entities.Cactus]
     def num(entity):
         return num_items(entityToItem[entity])
     def sort(allTypes):
@@ -55,9 +55,9 @@ def calculateType():
 
 
 def fit(types):
-    if (types == Entities.Carrot or types == Entities.Pumpkin) and get_ground_type() != Grounds.Soil:
+    if (types == Entities.Carrot or types == Entities.Pumpkin or types == Entities.Cactus) and get_ground_type() != Grounds.Soil:
         till()
-    elif (types != Entities.Carrot and types != Entities.Pumpkin) and get_ground_type() == Grounds.Soil:
+    elif (types != Entities.Carrot and types != Entities.Pumpkin or types == Entities.Cactus) and get_ground_type() == Grounds.Soil:
         till()
 
 def moves(x, y):
