@@ -118,10 +118,13 @@ def checkPumpkin():
                 fit(Entities.Pumpkin)
                 plant(Entities.Pumpkin)
                 full = False
+                continue
             elif not can_harvest():
                 full = False
-            else:
+                continue
+            elif get_entity_type() == Entities.Pumpkin and can_harvest():
                 xt.remove(i)
+                continue
     moves(x, y)
     harvest()
 
