@@ -7,6 +7,16 @@ xType = [Entities.Pumpkin, Entities.Pumpkin, Entities.Pumpkin,Entities.Pumpkin,
          Entities.Pumpkin, Entities.Pumpkin, Entities.Carrot,Entities.Carrot,
          Entities.Tree, Entities.Tree, Entities.Tree,Entities.Tree]
 
+def delay(tick):
+    now = get_tick_count()
+    while get_tick_count() - now <= tick:
+        continue
+
+def delayTime(time):
+    now = get_time()
+    while get_time() - now <= time:
+        continue
+
 def calculateType():
     allTypes = [Entities.Carrot, Entities.Tree, Entities.Grass, Entities.Pumpkin]
     def num(entity):
@@ -30,7 +40,7 @@ def calculateType():
     topThree = sorted_allTypes[2]
 
     end1 = world_size / 2
-    end2 = end1 + end1 / 2
+    end2 = end1 + end1 / 2 + 1
 
     for i in range(end1):
         xType[i] = topOne
@@ -88,6 +98,8 @@ def checkPumpkin():
             fit(Entities.Pumpkin)
             plant(Entities.Pumpkin)
 
+    delayTime(3.8)
+
     #检查一遍
     xt = []
 
@@ -105,10 +117,7 @@ def checkPumpkin():
                 xt.append((tox, toy))
 
     #开始检查南瓜是否完整
-    full = False
-    while not full:
-        pet_the_piggy()
-        full = True
+    while True:
         for i in xt:
             badx = i[0]
             bady = i[1]
@@ -117,14 +126,14 @@ def checkPumpkin():
                 harvest()
                 fit(Entities.Pumpkin)
                 plant(Entities.Pumpkin)
-                full = False
-                continue
             elif not can_harvest():
-                full = False
                 continue
-            elif get_entity_type() == Entities.Pumpkin and can_harvest():
-                xt.remove(i)
-                continue
+            elif get_entity_type() == Entities.Pumpkin:
+                if can_harvest():
+                    xt.remove(i)
+        if len(xt) == 0:
+            break
+        delayTime(3.8)
     moves(x, y)
     harvest()
 
